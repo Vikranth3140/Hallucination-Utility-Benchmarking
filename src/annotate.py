@@ -1,9 +1,13 @@
 """Annotation utilities for labeling hallucinations."""
 import json
 from tqdm import tqdm
+from dotenv import load_dotenv
 from .schema import ModelOutput, LabeledExample
 from .prompts import build_judge_prompt
 from .llm_clients import NIMClient
+
+# Load environment variables
+load_dotenv()
 
 
 def safe_parse_json(s: str):
