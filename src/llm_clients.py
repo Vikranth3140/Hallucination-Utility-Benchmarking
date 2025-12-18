@@ -43,11 +43,20 @@ class NIMClient:
             "max_tokens": self.max_tokens,
         }
 
-        resp = requests.post(url, headers=headers, json=payload, timeout=60)
-        if resp.status_code != 200:
-            raise RuntimeError(
-                f"NIM error {resp.status_code}: {resp.text}"
-            )
+        try:
+            resp = requests.post(url, headers=headers, json=payload, timeout=60)
+            if resp.status_code != 200:
+                error_msg = f"NIM error {resp.status_code}: {resp.text}"
+                # Try to extract more details
+                try:
+                    error_data = resp.json()
+                    if "detail" in error_data:
+                        error_msg = f"NIM error {resp.status_code}: {error_data['detail']}"
+                except:
+                    pass
+                raise RuntimeError(error_msg)
 
-        data = resp.json()
-        return data["choices"][0]["message"]["content"]
+            data = resp.json()
+            return data["choices"][0]["message"]["content"]
+        except requests.exceptions.RequestException as e:
+            raise RuntimeError(f"NIM request failed: {str(e)}")

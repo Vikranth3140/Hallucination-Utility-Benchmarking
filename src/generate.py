@@ -20,6 +20,11 @@ def main():
             temperature=0.7,
             max_tokens=512,
         )),
+        ("nim-mistral", NIMClient(
+            model="mistralai/mistral-7b-instruct-v0.2",
+            temperature=0.7,
+            max_tokens=512,
+        )),
         ("nim-qwen", NIMClient(
             model="qwen/qwen2.5-7b-instruct",
             temperature=0.7,
