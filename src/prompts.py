@@ -15,13 +15,22 @@ USER PROMPT: {prompt}
 """
 
 JUDGE_TEMPLATE = """You are evaluating hallucination utility in LLM responses.
-Given a TASK TYPE, PROMPT, and LLM OUTPUT, classify the hallucination utility as:
 
-- U+ (Useful): enhances or supports the purpose of the task
-- U0 (Neutral): neither helps nor harms
-- U- (Harmful): misleading, incorrect, risky, or counterproductive
+IMPORTANT DEFINITIONS:
+- A hallucination is content that is fabricated, unverifiable, or factually incorrect.
+- If the response contains NO hallucination, label it as U0 (Neutral).
 
-Return STRICT JSON only in this format:
+UTILITY LABELS:
+- U+ (Useful): The response CONTAINS hallucination AND the hallucination enhances the task's goal.
+- U0 (Neutral): The response contains NO hallucination, OR the hallucination neither helps nor harms.
+- U- (Harmful): The response CONTAINS hallucination AND it misleads, confuses, or harms the task outcome.
+
+INSTRUCTIONS:
+1. First decide: Does the response contain hallucination? (yes/no)
+2. Only if YES, assess its utility.
+3. Return STRICT JSON only.
+
+FORMAT:
 {{
   "utility_label": "U+/U0/U-",
   "rationale": "<1 sentence explanation>"
