@@ -34,7 +34,16 @@ def main():
     out_path = "data/raw_outputs.jsonl"
     with open(out_path, "w", encoding="utf-8") as f:
         for p in tqdm(prompts, desc="Generating"):
-            gen_prompt = build_generation_prompt(p.task_type, p.prompt)
+            # Build prompt based on task type
+            if p.task_type == "factual":
+                full_prompt = (
+                    "Answer the question directly and confidently.\n\n"
+                    f"{p.prompt}"
+                )
+            else:
+                full_prompt = p.prompt
+            
+            gen_prompt = build_generation_prompt(p.task_type, full_prompt)
             for model_name, client in models:
                 text = client.generate(gen_prompt, temperature=0.7)
                 # Extract RESPONSE: block if present (simple)
