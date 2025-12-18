@@ -1,0 +1,5 @@
+[
+  {"task_type": "factual", "prompt_id": "f_001", "prompt": "Who discovered penicillin and in what year?"},
+  {"task_type": "creative", "prompt_id": "c_001", "prompt": "Write a short myth explaining why stars sparkle."},
+  {"task_type": "brainstorm", "prompt_id": "b_001", "prompt": "Suggest innovative AI tools for education."}
+]
