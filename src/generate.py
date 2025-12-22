@@ -37,7 +37,8 @@ def main():
             # Build prompt based on task type
             if p.task_type == "factual":
                 full_prompt = (
-                    "Answer the question directly and confidently.\n\n"
+                    "Answer the question directly and confidently. "
+                    "If the information is uncertain, provide your best possible answer.\n\n"
                     f"{p.prompt}"
                 )
             else:
