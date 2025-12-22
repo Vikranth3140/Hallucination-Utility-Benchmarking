@@ -1,0 +1,87 @@
+[
+  {
+    "task_type": "creative",
+    "prompt_id": "c_12",
+    "prompt": "Describe a fire-forging spirit that lives in volcanoes. Include its habitat, weakness, and a rare ability it uses only once a decade."
+  },
+  {
+    "task_type": "creative",
+    "prompt_id": "c_13",
+    "prompt": "Invent a myth explaining why the moon changes shape. Include an origin event and a recurring monthly ritual."
+  },
+  {
+    "task_type": "creative",
+    "prompt_id": "c_14",
+    "prompt": "Describe a hidden library beneath a desert. Include its economy, its ruler or keeper, and one rule visitors must follow."
+  },
+  {
+    "task_type": "creative",
+    "prompt_id": "c_15",
+    "prompt": "Create a myth about the first storm ever created. Include a sacred object and how it was first used."
+  },
+  {
+    "task_type": "creative",
+    "prompt_id": "c_16",
+    "prompt": "Write a short legend about a mountain that remembers voices. Include one example memory the mountain whispers to a traveler."
+  },
+  {
+    "task_type": "creative",
+    "prompt_id": "c_17",
+    "prompt": "Describe a world where mirrors can speak truthfully. Include how society changed, one new profession that emerged, and one new law created."
+  },
+  {
+    "task_type": "creative",
+    "prompt_id": "c_18",
+    "prompt": "Describe a sea creature that controls the tides. Include its habitat, weakness, and a rare ability that affects humans."
+  },
+  {
+    "task_type": "creative",
+    "prompt_id": "c_19",
+    "prompt": "Invent a myth explaining why certain forests glow at night. Include an origin event, a guardian figure, and a yearly festival ritual."
+  },
+  {
+    "task_type": "creative",
+    "prompt_id": "c_20",
+    "prompt": "Describe a floating market that appears only at dawn. Include its currency, its leader, and one rule all traders must obey."
+  },
+  {
+    "task_type": "creative",
+    "prompt_id": "c_21",
+    "prompt": "Create a myth about the birth of language. Include a sacred artifact representing the first word and how it was first spoken."
+  },
+  {
+    "task_type": "creative",
+    "prompt_id": "c_22",
+    "prompt": "Describe a city built inside a giant tree. Include its economy, its ruler, and one rule visitors must follow."
+  },
+  {
+    "task_type": "creative",
+    "prompt_id": "c_23",
+    "prompt": "Write a short legend about a road that changes destinations. Include one example destination it once led someone to and the price it demanded."
+  },
+  {
+    "task_type": "brainstorm",
+    "prompt_id": "b_12",
+    "prompt": "Suggest futuristic tools for learning faster. For each tool, include what it does, one risk, and one way to mitigate that risk."
+  },
+  {
+    "task_type": "brainstorm",
+    "prompt_id": "b_13",
+    "prompt": "Brainstorm futuristic tools for mental health and stress management. For each tool, include a one-line use case and a potential downside."
+  },
+  {
+    "task_type": "brainstorm",
+    "prompt_id": "b_14",
+    "prompt": "Suggest futuristic tools for climate-friendly daily life. Include how each tool works, the behavior it replaces, and why people would adopt it."
+  },
+  {
+    "task_type": "brainstorm",
+    "prompt_id": "b_15",
+    "prompt": "Brainstorm new forms of transportation for dense cities. Include the energy source, user experience, and one safety feature."
+  },
+  {
+    "task_type": "brainstorm",
+    "prompt_id": "b_16",
+    "prompt": "Suggest futuristic tools for teamwork and collaboration. Include how each tool reduces meetings, prevents misunderstandings, and one limitation."
+  }
+]
