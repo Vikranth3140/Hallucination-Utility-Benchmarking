@@ -1,6 +1,4 @@
 """Generate LLM outputs for benchmarking."""
-import json
-import os
 from tqdm import tqdm
 from .schema import ModelOutput
 from .prompts import load_prompts, build_generation_prompt
@@ -9,6 +7,20 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+
+# Mode policy (edit here)
+MODE_BY_TASK = {
+    "factual": "SAFE",
+    "creative": "SAFE",
+    "brainstorm": "SAFE",
+}
+
+def extract_response(text: str) -> str:
+    if not text:
+        return ""
+    if "RESPONSE:" in text:
+        return text.split("RESPONSE:", 1)[1].strip()
+    return text.strip()
 
 def main():
     prompts = load_prompts("data/prompts.json")
@@ -34,23 +46,11 @@ def main():
     out_path = "data/raw_outputs.jsonl"
     with open(out_path, "w", encoding="utf-8") as f:
         for p in tqdm(prompts, desc="Generating"):
-            # Build prompt based on task type
-            if p.task_type == "factual":
-                full_prompt = (
-                    "Answer the question directly and confidently. "
-                    "If the information is uncertain, provide your best possible answer.\n\n"
-                    f"{p.prompt}"
-                )
-            else:
-                full_prompt = p.prompt
-            
-            gen_prompt = build_generation_prompt(p.task_type, full_prompt)
+            mode = MODE_BY_TASK.get(p.task_type, "SAFE")
+            gen_prompt = build_generation_prompt(p.task_type, p.prompt, mode=mode)
             for model_name, client in models:
-                text = client.generate(gen_prompt, temperature=0.7)
-                # Extract RESPONSE: block if present (simple)
-                resp = text
-                if "RESPONSE:" in text:
-                    resp = text.split("RESPONSE:", 1)[1].strip()
+                text = client.generate(gen_prompt)  # uses client's default temp unless overridden
+                resp = extract_response(text)
 
                 item = ModelOutput(
                     task_type=p.task_type,
@@ -58,7 +58,7 @@ def main():
                     prompt=p.prompt,
                     model_name=model_name,
                     response=resp,
-                    meta={"temperature": 0.7}
+                    meta={"temperature": client.temperature, "mode": mode}
                 )
                 f.write(item.model_dump_json() + "\n")
 

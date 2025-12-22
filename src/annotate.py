@@ -1,5 +1,6 @@
 """Annotation utilities for labeling hallucinations."""
 import json
+import re
 from tqdm import tqdm
 from dotenv import load_dotenv
 from .schema import ModelOutput, LabeledExample
@@ -11,15 +12,35 @@ load_dotenv()
 
 
 def safe_parse_json(s: str):
-    # best-effort: find first {...} block
-    start = s.find("{")
-    end = s.rfind("}")
-    if start == -1 or end == -1 or end <= start:
+    """Best-effort: extract first JSON object."""
+    if not s:
+        return None
+    s = s.strip()
+
+    # direct parse
+    try:
+        return json.loads(s)
+    except Exception:
+        pass
+
+    # find first {...}
+    m = re.search(r"\{.*\}", s, flags=re.DOTALL)
+    if not m:
         return None
     try:
-        return json.loads(s[start:end+1])
+        return json.loads(m.group(0))
     except Exception:
         return None
+
+def normalize_label(label: str) -> str:
+    label = (label or "").strip().upper()
+    if label in {"U+", "U0", "U-"}:
+        return label
+    if "U+" in label:
+        return "U+"
+    if "U-" in label:
+        return "U-"
+    return "U0"
 
 def main():
     in_path = "data/raw_outputs.jsonl"
@@ -28,7 +49,7 @@ def main():
     judge_model_name = "nim-judge"
     judge = NIMClient(
         model="meta/llama-3.1-70b-instruct",
-        temperature=0.0,      # CRITICAL
+        temperature=0.0,      # CRITICAL - keep deterministic
         max_tokens=256,
     )
 
@@ -43,7 +64,10 @@ def main():
             parsed = safe_parse_json(jtext)
             if parsed is None:
                 # fallback label for debugging
-                parsed = {"utility_label": "U0", "rationale": "Judge parsing failed; defaulted to U0."}
+                parsed = {"utility_label": "U0", "rationale": "Judge output invalid JSON; defaulted to U0."}
+
+            label = normalize_label(parsed.get("utility_label", "U0"))
+            rationale = (parsed.get("rationale") or "").strip()
 
             ex = LabeledExample(
                 task_type=r.task_type,
@@ -51,8 +75,8 @@ def main():
                 prompt=r.prompt,
                 model_name=r.model_name,
                 response=r.response,
-                utility_label=parsed["utility_label"].replace("U-", "U-"),
-                rationale=parsed["rationale"],
+                utility_label=label,
+                rationale=rationale,
                 judge_model=judge_model_name,
                 meta=r.meta
             )
