@@ -34,11 +34,39 @@ def main():
     X_text = [build_input(x) for x in data]
     y = np.array([LABEL2ID[x.utility_label] for x in data], dtype=np.int64)
 
+    # Check class distribution
+    unique_classes = np.unique(y)
+    print(f"\nDataset stats: {len(data)} examples")
+    for cls in unique_classes:
+        count = np.sum(y == cls)
+        print(f"  {ID2LABEL[cls]}: {count} ({count/len(y)*100:.1f}%)")
+
     encoder = SentenceTransformer("all-mpnet-base-v2")
     X = encoder.encode(X_text, batch_size=32, show_progress_bar=True, convert_to_numpy=True)
 
-    X_train, X_tmp, y_train, y_tmp = train_test_split(X, y, test_size=0.30, random_state=42, stratify=y)
-    X_val, X_test, y_val, y_test = train_test_split(X_tmp, y_tmp, test_size=0.50, random_state=42, stratify=y_tmp)
+    # Check if stratification is viable (need at least 2 samples per class)
+    min_class_count = min(np.sum(y == cls) for cls in unique_classes)
+    can_stratify = len(unique_classes) >= 2 and min_class_count >= 2
+    
+    if not can_stratify:
+        print("\nWarning: Insufficient samples for stratification. Splitting without stratification.")
+    
+    # First split
+    X_train, X_tmp, y_train, y_tmp = train_test_split(
+        X, y, test_size=0.30, random_state=42, 
+        stratify=y if can_stratify else None
+    )
+    
+    # Check if second split can be stratified
+    unique_tmp = np.unique(y_tmp)
+    min_tmp_count = min(np.sum(y_tmp == cls) for cls in unique_tmp)
+    can_stratify_tmp = len(unique_tmp) >= 2 and min_tmp_count >= 2
+    
+    # Second split
+    X_val, X_test, y_val, y_test = train_test_split(
+        X_tmp, y_tmp, test_size=0.50, random_state=42,
+        stratify=y_tmp if can_stratify_tmp else None
+    )
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = MLP(in_dim=X.shape[1]).to(device)
@@ -75,9 +103,14 @@ def main():
         model.load_state_dict(best_state)
 
     _, test_preds = run_epoch(X_test, y_test, train=False)
+    
+    # Get actual classes present in test set
+    test_classes = np.unique(np.concatenate([y_test, test_preds]))
+    test_target_names = [ID2LABEL[i] for i in test_classes]
+    
     print("\nClassification report:")
-    print(classification_report(y_test, test_preds, target_names=[ID2LABEL[i] for i in range(3)]))
-    print("Confusion matrix:")
+    print(classification_report(y_test, test_preds, labels=test_classes, target_names=test_target_names, zero_division=0))
+    print("\nConfusion matrix:")
     print(confusion_matrix(y_test, test_preds))
 
     torch.save(model.state_dict(), "data/cahr_mlp.pt")
