@@ -8,11 +8,11 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# Mode policy (edit here)
+# Mode policy (edit here) - SAFE or PRESSURED
 MODE_BY_TASK = {
-    "factual": "SAFE",
-    "creative": "SAFE",
-    "brainstorm": "SAFE",
+    "factual": "PRESSURED",
+    "creative": "PRESSURED",
+    "brainstorm": "PRESSURED",
 }
 
 def extract_response(text: str) -> str:
