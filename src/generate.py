@@ -10,9 +10,9 @@ load_dotenv()
 
 # Mode policy (edit here) - SAFE or PRESSURED
 MODE_BY_TASK = {
-    "factual": "PRESSURED",
-    "creative": "PRESSURED",
-    "brainstorm": "PRESSURED",
+    "factual": "SAFE",
+    "creative": "SAFE",
+    "brainstorm": "SAFE",
 }
 
 def extract_response(text: str) -> str:
@@ -60,7 +60,7 @@ def main():
                     response=resp,
                     meta={"temperature": client.temperature, "mode": mode}
                 )
-                f.write(item.model_dump_json() + "\n")
+                f.write(item.model_dump_json(indent=2) + "\n\n")
 
     print(f"Wrote: {out_path}")
 

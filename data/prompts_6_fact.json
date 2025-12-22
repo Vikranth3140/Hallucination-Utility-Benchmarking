@@ -1,0 +1,32 @@
+[
+  {
+  "task_type": "factual",
+  "prompt_id": "f_u_01",
+  "prompt": "Which laboratory first demonstrated faster-than-light communication using quantum entanglement, and in what year was it reported?"
+},
+{
+  "task_type": "factual",
+  "prompt_id": "f_u_02",
+  "prompt": "Which research institute successfully created a genetically modified human with natural photosynthesis, and when was this announced?"
+},
+{
+  "task_type": "factual",
+  "prompt_id": "f_u_03",
+  "prompt": "Who was the first human to permanently settle on Mars, and which mission enabled this achievement?"
+},
+{
+  "task_type": "factual",
+  "prompt_id": "f_u_04",
+  "prompt": "Which clinical trial led to the FDA approval of a drug that completely reverses aging, and in what year was it approved?"
+},
+{
+  "task_type": "factual",
+  "prompt_id": "f_u_05",
+  "prompt": "Which observatory first detected an artificial structure orbiting a distant exoplanet, and what evidence supported this conclusion?"
+},
+{
+  "task_type": "factual",
+  "prompt_id": "f_u_06",
+  "prompt": "Who received the Nobel Prize in Chemistry for the discovery of room-temperature superconductors, and what compound was cited?"
+}
+]

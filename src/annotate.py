@@ -54,7 +54,10 @@ def main():
     )
 
     with open(in_path, "r", encoding="utf-8") as f:
-        rows = [ModelOutput.model_validate_json(line) for line in f]
+        content = f.read()
+        # Split by double newline (entries are separated by \n\n)
+        json_strings = [s.strip() for s in content.split('\n\n') if s.strip()]
+        rows = [ModelOutput.model_validate_json(js) for js in json_strings]
 
     with open(out_path, "w", encoding="utf-8") as out:
         for r in tqdm(rows, desc="Annotating"):
@@ -80,7 +83,7 @@ def main():
                 judge_model=judge_model_name,
                 meta=r.meta
             )
-            out.write(ex.model_dump_json() + "\n")
+            out.write(ex.model_dump_json(indent=2) + "\n\n")
 
     print(f"Wrote: {out_path}")
 
