@@ -27,7 +27,7 @@ def build_input(ex: LabeledExample) -> str:
     return f"[TASK={ex.task_type}]\nPrompt: {ex.prompt}\nOutput: {ex.response}"
 
 def main():
-    path = "data/labeled.jsonl"
+    path = "data/labeled_PRESSURED.jsonl"
     with open(path, "r", encoding="utf-8") as f:
         data = [LabeledExample.model_validate_json(line) for line in f]
 

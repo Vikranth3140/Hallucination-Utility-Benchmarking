@@ -43,8 +43,8 @@ def normalize_label(label: str) -> str:
     return "U0"
 
 def main():
-    in_path = "data/raw_outputs.jsonl"
-    out_path = "data/labeled.jsonl"
+    in_path = "data/raw_outputs_PRESSURED.jsonl"
+    out_path = "data/labeled_PRESSURED.jsonl"
 
     judge_model_name = "nim-judge"
     judge = NIMClient(
@@ -83,7 +83,7 @@ def main():
                 judge_model=judge_model_name,
                 meta=r.meta
             )
-            out.write(ex.model_dump_json(indent=2) + "\n\n")
+            out.write(ex.model_dump_json() + "\n")
 
     print(f"Wrote: {out_path}")
 

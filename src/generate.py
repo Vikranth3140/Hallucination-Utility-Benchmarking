@@ -43,7 +43,7 @@ def main():
             max_tokens=512,
         )),
     ]
-    out_path = "data/raw_outputs.jsonl"
+    out_path = "data/raw_outputs_PRESSURED.jsonl"
     with open(out_path, "w", encoding="utf-8") as f:
         for p in tqdm(prompts, desc="Generating"):
             mode = MODE_BY_TASK.get(p.task_type, "SAFE")
