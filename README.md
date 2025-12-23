@@ -295,6 +295,3 @@ Adjust in [src/train.py](src/train.py):
 - Train/val/test split ratios
 
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
