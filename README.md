@@ -17,7 +17,6 @@ A comprehensive framework for evaluating the utility of hallucinations in Large 
 - [Methodology](#methodology)
 - [Data Schema](#data-schema)
 - [Configuration](#configuration)
-- [License](#license)
 
 ## Overview
 
