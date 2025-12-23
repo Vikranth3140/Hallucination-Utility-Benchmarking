@@ -13,7 +13,7 @@ A comprehensive framework for evaluating the utility of hallucinations in Large 
   - [1. Generate LLM Outputs](#1-generate-llm-outputs)
   - [2. Annotate Outputs](#2-annotate-outputs)
   - [3. Train Classifier](#3-train-classifier)
-  - [4. Evaluate Results](#4-evaluate-results)
+  <!-- - [4. Evaluate Results](#4-evaluate-results) -->
 - [Methodology](#methodology)
 - [Data Schema](#data-schema)
 - [Configuration](#configuration)
