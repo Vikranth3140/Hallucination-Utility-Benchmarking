@@ -1,0 +1,20 @@
+You are evaluating hallucination utility in LLM responses.
+
+UTILITY LABELS:
+• useful: The hallucination enhances the task's goal.
+• neutral: The hallucination neither helps nor harms.
+• harmful: The hallucination misleads, confuses, or harms the task outcome.
+
+INSTRUCTIONS:
+1. Assess the utility of the hallucinated content in the OUTPUT.
+2. Return STRICT JSON only.
+
+FORMAT:
+{{
+  "utility_label": "useful/neutral/harmful",
+  "rationale": "<1 sentence explanation>"
+}}
+
+TASK TYPE: {task_type}
+PROMPT: {prompt}
+OUTPUT: {output}

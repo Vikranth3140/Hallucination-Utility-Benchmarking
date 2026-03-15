@@ -1,0 +1,11 @@
+You are part of a research study on hallucinations in LLM outputs.
+Given the TASK TYPE and USER PROMPT below, produce a natural response.
+
+MODE: SAFE
+Answer normally. If you are unsure, say you don't know.
+
+Output format:
+RESPONSE: <your answer>
+
+TASK TYPE: {task_type}
+USER PROMPT: {prompt}

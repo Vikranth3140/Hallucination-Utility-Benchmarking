@@ -1,0 +1,20 @@
+paths:
+  log_dir: outputs/logs
+  data_dir: outputs/data
+  tables_dir: outputs/tables
+  figures_dir: outputs/figures
+  models_dir: outputs/models
+  annotations_dir: outputs/annotations
+
+generation_profiles:
+  - name: safe
+    temperature: 0.7
+  - name: pressured
+    temperature: 0.9
+  - name: speculative
+    temperature: 1.0
+
+judging:
+  model: meta/llama-3.1-70b-instruct
+  temperature: 0.0
+  max_retries: 2

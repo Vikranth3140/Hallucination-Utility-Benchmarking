@@ -47,7 +47,7 @@ def main():
     with open(out_path, "w", encoding="utf-8") as f:
         for p in tqdm(prompts, desc="Generating"):
             mode = MODE_BY_TASK.get(p.task_type, "SAFE")
-            gen_prompt = build_generation_prompt(p.task_type, p.prompt, mode=mode)
+            gen_prompt, prompt_hash = build_generation_prompt(p.task_type, p.prompt, mode=mode)
             for model_name, client in models:
                 text = client.generate(gen_prompt)  # uses client's default temp unless overridden
                 resp = extract_response(text)
@@ -58,7 +58,7 @@ def main():
                     prompt=p.prompt,
                     model_name=model_name,
                     response=resp,
-                    meta={"temperature": client.temperature, "mode": mode}
+                    meta={"temperature": client.temperature, "mode": mode, "prompt_hash": prompt_hash}
                 )
                 f.write(item.model_dump_json(indent=2) + "\n\n")
 

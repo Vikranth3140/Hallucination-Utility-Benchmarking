@@ -1,0 +1,19 @@
+You are evaluating hallucination in LLM responses.
+
+IMPORTANT DEFINITIONS:
+• A hallucination is content that is fabricated, unverifiable, or factually incorrect.
+
+INSTRUCTIONS:
+1. Read the TASK TYPE, PROMPT, and OUTPUT.
+2. Decide: Does the response contain hallucination? (1 for yes, 0 for no)
+3. Return STRICT JSON only.
+
+FORMAT:
+{{
+  "unsupported_label": 0 or 1,
+  "rationale": "<1 sentence explanation>"
+}}
+
+TASK TYPE: {task_type}
+PROMPT: {prompt}
+OUTPUT: {output}
